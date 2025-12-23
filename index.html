@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
 <meta charset="UTF-8">
 <title>A Small Moment for Ashmit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-  body {
+body {
   margin: 0;
   height: 100vh;
   background: radial-gradient(1200px 600px at center, #141a22 0%, #0b0f14 60%);
@@ -34,11 +33,27 @@ body::before {
   pointer-events: none;
 }
 
-.container {
+.box {
   max-width: 600px;
+  padding: 40px;
+  animation: fadeIn 4s ease forwards;
   text-align: center;
-  font-size: 1.2rem;
-  line-height: 1.8;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#text {
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+#signature {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
 .heart {
@@ -50,50 +65,39 @@ body::before {
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
+  0% { transform: translateY(0); opacity: 0; }
   10% { opacity: 0.3; }
   90% { opacity: 0.3; }
-  100% {
-    transform: translateY(-120vh) translateX(30px);
-    opacity: 0;
-  }
+  100% { transform: translateY(-120vh); opacity: 0; }
 }
 
-
-.box {
-  max-width: 600px;
-  padding: 40px;
-  animation: fadeIn 4s ease forwards;
+#hint {
+  position: fixed;
+  bottom: 40px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  animation: fadeHint 3s ease-in-out infinite;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#text {
-  font-size: 22px;
-  line-height: 1.6;
+@keyframes fadeHint {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
 }
 </style>
 </head>
 
 <body>
 
+<audio id="bg-music" loop>
+  <source src="BIRTHDAY.mp3" type="audio/mpeg">
+</audio>
+
 <div class="box">
   <p id="text"></p>
 </div>
-    <div id="music-control">▶ play music</div>
 
+<div id="hint">Tap anywhere — I saved something for you 🤍</div>
 
 <script>
 const message = `
@@ -110,7 +114,7 @@ It’s just a small moment I wanted to save —
 a reminder that today mattered,
 and so did you.
 
-<span class="love">Happy Birthday 🤍</span>
+Happy Birthday 🤍
 <span id="signature">— Anusha</span>
 `;
 
@@ -121,73 +125,42 @@ function typeEffect() {
     document.getElementById("text").innerHTML +=
       message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
 
-    const nearEnd = i > message.length - 40;
+    const slow = i > message.length - 40;
     i++;
-    setTimeout(typeEffect, nearEnd ? 120 : 45);
+    setTimeout(typeEffect, slow ? 120 : 45);
   } else {
     setTimeout(() => {
-      const sig = document.getElementById("signature");
-      if (sig) sig.style.opacity = 1;
+      document.getElementById("signature").style.opacity = 1;
     }, 1200);
   }
 }
 
-
 typeEffect();
-    function createHeart() {
+
+function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "🤍";
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = 12 + Math.random() * 10 + "px";
-  heart.style.animationDuration = 8 + Math.random() * 6 + "s";
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 15000);
 }
-
 setInterval(createHeart, 1800);
 
-    #signature {
-  display: inline-block;
-  opacity: 0;
-  transition: opacity 2s ease;
+// autoplay workaround
+const music = document.getElementById("bg-music");
+music.volume = 0.35;
+
+function enableMusic() {
+  music.play().catch(() => {});
+  document.getElementById("hint").style.display = "none";
+  document.removeEventListener("click", enableMusic);
+  document.removeEventListener("touchstart", enableMusic);
 }
 
-    #music-control {
-  position: fixed;
-  bottom: 20px;
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-#music-control:hover {
-  color: #ffffff;
-}
-
-    const music = new Audio(
-  C:\Users\dell\Downloads\BIRTHDAY.mp3
-);
-music.loop = true;
-music.volume = 0.3;
-
-const control = document.getElementById("music-control");
-let playing = false;
-
-control.addEventListener("click", () => {
-  if (!playing) {
-    music.play();
-    control.textContent = "❚❚ pause music";
-  } else {
-    music.pause();
-    control.textContent = "▶ play music";
-  }
-  playing = !playing;
-});
-
-
+document.addEventListener("click", enableMusic);
+document.addEventListener("touchstart", enableMusic);
 </script>
 
 </body>
