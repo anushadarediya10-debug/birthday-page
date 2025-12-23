@@ -92,6 +92,8 @@ body::before {
 <div class="box">
   <p id="text"></p>
 </div>
+    <div id="music-control">▶ play music</div>
+
 
 <script>
 const message = `
@@ -108,8 +110,8 @@ It’s just a small moment I wanted to save —
 a reminder that today mattered,
 and so did you.
 
-Happy Birthday 🤍
-— Anusha
+<span class="love">Happy Birthday 🤍</span>
+<span id="signature">— Anusha</span>
 `;
 
 let i = 0;
@@ -118,12 +120,74 @@ function typeEffect() {
   if (i < message.length) {
     document.getElementById("text").innerHTML +=
       message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
+
+    const nearEnd = i > message.length - 40;
     i++;
-    setTimeout(typeEffect, 45);
+    setTimeout(typeEffect, nearEnd ? 120 : 45);
+  } else {
+    setTimeout(() => {
+      const sig = document.getElementById("signature");
+      if (sig) sig.style.opacity = 1;
+    }, 1200);
   }
 }
 
+
 typeEffect();
+    function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "🤍";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = 12 + Math.random() * 10 + "px";
+  heart.style.animationDuration = 8 + Math.random() * 6 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 15000);
+}
+
+setInterval(createHeart, 1800);
+
+    #signature {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+    #music-control {
+  position: fixed;
+  bottom: 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#music-control:hover {
+  color: #ffffff;
+}
+
+    const music = new Audio(
+  C:\Users\dell\Downloads\BIRTHDAY.mp3
+);
+music.loop = true;
+music.volume = 0.3;
+
+const control = document.getElementById("music-control");
+let playing = false;
+
+control.addEventListener("click", () => {
+  if (!playing) {
+    music.play();
+    control.textContent = "❚❚ pause music";
+  } else {
+    music.pause();
+    control.textContent = "▶ play music";
+  }
+  playing = !playing;
+});
+
+
 </script>
 
 </body>
