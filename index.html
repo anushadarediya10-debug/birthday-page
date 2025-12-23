@@ -11,6 +11,11 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
+  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
 
   background:
     linear-gradient(
@@ -26,18 +31,19 @@ body {
   color: #ffffff;
   overflow: hidden;
 }
-
 .box {
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   padding: 40px;
-  text-align: center;
+  margin: 0 auto;
 
+  text-align: center;
   background: rgba(0, 0, 0, 0.15);
   border-radius: 14px;
 
   animation: fadeIn 4s ease forwards;
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
@@ -53,9 +59,12 @@ body {
 .heart {
   position: fixed;
   bottom: -20px;
-  color: rgba(255,255,255,0.15);
-  font-size: 14px;
-  animation: floatUp 12s linear infinite;
+  color: rgba(255,255,255,0.08);
+  font-size: 10px;
+  animation: floatUp 18s linear infinite;
+  pointer-events: none;
+  setInterval(createHeart, 3000);
+
 }
 
 @keyframes floatUp {
@@ -142,7 +151,7 @@ function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "🤍";
-  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.left = 50 + (Math.random() * 40 - 20) + "vw";
   heart.style.fontSize = 12 + Math.random() * 10 + "px";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 15000);
