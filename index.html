@@ -8,16 +8,23 @@
 
 <style>
   body {
-  body {
   margin: 0;
   height: 100vh;
-  background: url("cake.avif") center / contain no-repeat black;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("cake.avif") center / cover no-repeat;
+
+  color: #f1f1f1;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Playfair Display", Georgia, serif;
+  animation: breathe 10s ease-in-out infinite;
 }
-
-
 
 @keyframes breathe {
   0% { filter: brightness(0.95); }
@@ -31,8 +38,8 @@
   animation: fadeIn 4s ease forwards;
   text-align: center;
   
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
   border-radius: 14px;
 }
 
