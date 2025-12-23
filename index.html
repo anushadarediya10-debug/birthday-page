@@ -7,8 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-  body {
+body {
   margin: 0;
+  width: 100vw;
   height: 100vh;
 
   background:
@@ -18,30 +19,24 @@
     ),
     url("cake.avif") center / cover no-repeat;
 
-  color: #f1f1f1;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Playfair Display", Georgia, serif;
-  animation: breathe 10s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  0% { filter: brightness(0.95); }
-  50% { filter: brightness(1.05); }
-  100% { filter: brightness(0.95); }
+  color: #ffffff;
+  overflow: hidden;
 }
 
 .box {
+  width: 90%;
   max-width: 600px;
   padding: 40px;
-  animation: fadeIn 4s ease forwards;
   text-align: center;
 
   background: rgba(0, 0, 0, 0.15);
   border-radius: 14px;
-  #text {
-  color: #ffffff;
+
+  animation: fadeIn 4s ease forwards;
 }
 
 @keyframes fadeIn {
@@ -52,12 +47,7 @@
 #text {
   font-size: 22px;
   line-height: 1.6;
-}
-
-#signature {
-  display: inline-block;
-  opacity: 0;
-  transition: opacity 2s ease;
+  color: #ffffff;
 }
 
 .heart {
@@ -116,18 +106,20 @@ it feels important.
 
 We’re miles apart.
 Different places, different routines,
-and yet, somehow,
+and yet,
 we keep choosing each other.
-The quiet comfort of knowing someone is there.
+
+The quiet comfort of knowing
+someone is there.
 
 I don’t know what the future holds,
-but I know this 
+but I know this —
 as long as you need me,
 I’ll be here.
 Always.
 
 This page isn’t fancy.
-It’s just a small moment I wanted to save 
+Just a small moment I wanted to save —
 a reminder that today mattered,
 and so did you.
 
@@ -136,22 +128,14 @@ Happy Birthday 🤍
 `;
 
 let i = 0;
-
 function typeEffect() {
   if (i < message.length) {
     document.getElementById("text").innerHTML +=
       message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
-
-    const slow = i > message.length - 40;
     i++;
-    setTimeout(typeEffect, slow ? 120 : 45);
-  } else {
-    setTimeout(() => {
-      document.getElementById("signature").style.opacity = 1;
-    }, 1200);
+    setTimeout(typeEffect, 45);
   }
 }
-
 typeEffect();
 
 function createHeart() {
@@ -175,7 +159,6 @@ function enableMusic() {
   document.removeEventListener("click", enableMusic);
   document.removeEventListener("touchstart", enableMusic);
 }
-
 document.addEventListener("click", enableMusic);
 document.addEventListener("touchstart", enableMusic);
 </script>
